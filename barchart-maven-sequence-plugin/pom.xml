@@ -4,25 +4,30 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.barchart.base</groupId>
-		<artifactId>barchart-base-maven</artifactId>
-		<version>1.0.3-SNAPSHOT</version>
+		<groupId>com.barchart.maven</groupId>
+		<artifactId>barchart-maven-archon</artifactId>
+		<version>1.1.1</version>
 	</parent>
 
-	<groupId>com.barchart.maven</groupId>
 	<artifactId>barchart-maven-sequence-plugin</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
-	<version>1.0.3-SNAPSHOT</version>
-	
+
 	<description>this plugin provides multipe counters / sequence generators</description>
-	
+
+	<scm>
+		<url>https://github.com/barchart/barchart-maven</url>
+		<connection>scm:git:git://github.com/barchart/barchart-maven.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-maven.git</developerConnection>
+	</scm>
+
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 </project>
