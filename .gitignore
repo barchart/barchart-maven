@@ -6,16 +6,14 @@
 # http://www.opensource.org/licenses/bsd-license.php
 #
 
-# keep top level
-!/.project
-
-# drop all below
 .project
 .classpath
 .settings/
 
 bin/
 target/
+
+log/
 logs/
 
 release.properties
