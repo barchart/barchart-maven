@@ -1,0 +1,60 @@
+
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+
+	<id>tanuki-distro</id>
+
+	<formats>
+		<format>zip</format>
+	</formats>
+
+	<!-- do not start archive directory structure with artifactId -->
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<fileSets>
+
+		<fileSet>
+
+			<directory>${appFolderTarget}</directory>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0644</fileMode>
+
+			<excludes>
+				<!-- setup permissions inside archive -->
+				<exclude>**/*.sh</exclude>
+				<exclude>**/*.bin</exclude>
+			</excludes>
+
+			<!-- put final binary assembled application into this folder inside the
+				archive -->
+			<!-- <outputDirectory>app</outputDirectory> -->
+			<outputDirectory>${appFolderNameTimestamp}</outputDirectory>
+
+		</fileSet>
+
+		<fileSet>
+
+			<directory>${appFolderTarget}</directory>
+			<directoryMode>0755</directoryMode>
+			<fileMode>0755</fileMode>
+
+			<includes>
+				<!-- setup permissions inside archive -->
+				<include>**/*.sh</include>
+				<include>**/*.bin</include>
+			</includes>
+
+			<!-- put final binary assembled application into this folder inside the
+				archive -->
+			<!-- <outputDirectory>app</outputDirectory> -->
+			<outputDirectory>${appFolderNameTimestamp}</outputDirectory>
+
+		</fileSet>
+
+	</fileSets>
+
+</assembly>
+
+
