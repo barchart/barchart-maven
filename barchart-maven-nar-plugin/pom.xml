@@ -1,0 +1,233 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.barchart.base</groupId>
+		<artifactId>barchart-archon</artifactId>
+		<version>2.3.2</version>
+		<relativePath />
+	</parent>
+
+	<groupId>com.barchart.maven</groupId>
+	<artifactId>barchart-maven-nar-plugin</artifactId>
+	<version>2.1-build001-SNAPSHOT</version>
+	<packaging>maven-plugin</packaging>
+
+	<description>
+		custom build of maven-nar-plugin from Mark.Donszelmann@gmail.com
+	</description>
+
+	<scm>
+		<url>https://github.com/barchart/barchart-maven</url>
+		<connection>scm:git:git://github.com/barchart/barchart-maven.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/barchart/barchart-maven.git</developerConnection>
+	</scm>
+
+	<properties>
+
+		<javaVersion>1.6</javaVersion>
+		<mavenVersion>2.0.9</mavenVersion>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<maven.build.timestamp.format>yyyy-MM-dd_HH-mm-ss</maven.build.timestamp.format>
+
+		<!-- must be provided by settingx.xml -->
+		<scmServerId>barchart-google-code</scmServerId>
+
+		<scmSiteURL>svn:https://barchart-udt.googlecode.com/svn/site</scmSiteURL>
+		<scmSiteProject>${project.artifactId}</scmSiteProject>
+
+		<sonatypeStagingUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</sonatypeStagingUrl>
+
+		<checkoutNAR>target/nar-git</checkoutNAR>
+		<!-- <connectionNAR>scm:git:https://github.com/duns/maven-nar-plugin.git</connectionNAR> -->
+		<connectionNAR>scm:git:https://github.com/maven-nar/maven-nar-plugin.git</connectionNAR>
+
+		<!-- ### -->
+
+	</properties>
+
+	<prerequisites>
+		<maven>${mavenVersion}</maven>
+	</prerequisites>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-artifact</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model</artifactId>
+			<version>${mavenVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.surefire</groupId>
+			<artifactId>surefire-booter</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-toolchain</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-container-default</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-compiler-api</artifactId>
+			<version>1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>2.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-archiver</artifactId>
+			<version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.plexus</groupId>
+					<artifactId>plexus-component-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.antcontrib</groupId>
+			<artifactId>cpptasks-parallel</artifactId>
+			<version>1.0-beta-5-parallel-1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.bcel</groupId>
+			<artifactId>bcel</artifactId>
+			<version>5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+		<site>
+			<id>${scmServerId}</id>
+			<url>${scmSiteURL}</url>
+		</site>
+	</distributionManagement>
+
+	<dependencyManagement>
+
+		<dependencies>
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>1.4</version>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+		</plugins>
+
+	</build>
+
+	<profiles>
+
+		<profile>
+			<!-- get updated UDT sources form Mark Donszelmann GIT -->
+			<id>checkout</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<configuration>
+							<connectionType>connection</connectionType>
+							<connectionUrl>${connectionNAR}</connectionUrl>
+							<checkoutDirectory>${checkoutNAR}</checkoutDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<id>checkout-nar-sources-from-git</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>checkout</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-nar-sources-after-checkout</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<overwrite>true</overwrite>
+									<resources>
+										<resource>
+											<directory>${checkoutNAR}/src</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+									<outputDirectory>${basedir}/src</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+</project>
