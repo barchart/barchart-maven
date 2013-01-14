@@ -47,7 +47,6 @@ import org.codehaus.plexus.archiver.jar.JarArchiver;
 /**
  * assembles a kar archive
  *
- * @version $Revision: 1243427 $
  * @goal features-create-kar
  * @phase package
  * @requiresDependencyResolution runtime
@@ -125,10 +124,7 @@ public class CreateKarMojo extends MojoSupport {
         File archive = createArchive(resources);
 
         // Attach the generated archive for install/deploy
-        Artifact artifact = factory.createArtifact(project.getGroupId(), project.getArtifactId(), project.getVersion(), null, "kar");
-        artifact.setFile(archive);
-
-        project.addAttachedArtifact(artifact);
+        projectHelper.attachArtifact(project, "kar", null, archive);
     }
 
     /**

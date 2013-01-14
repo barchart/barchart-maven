@@ -87,6 +87,15 @@ Karaf allows for using dynamic resolvers.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="start-level" type="xs:int">
+            <xs:annotation>
+                <xs:documentation><![CDATA[
+Set this attribute to have an OSGi start level for this feature different
+from the default start level defined in Karaf's config.properties.
+                ]]>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="bundle">

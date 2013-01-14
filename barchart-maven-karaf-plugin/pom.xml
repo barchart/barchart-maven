@@ -2,50 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<!-- Licensed to the Apache Software Foundation (ASF) under one or more 
-		contributor license agreements. See the NOTICE file distributed with this 
-		work for additional information regarding copyright ownership. The ASF licenses 
-		this file to You under the Apache License, Version 2.0 (the "License"); you 
-		may not use this file except in compliance with the License. You may obtain 
-		a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless 
-		required by applicable law or agreed to in writing, software distributed 
-		under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-		OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-		the specific language governing permissions and limitations under the License. -->
-
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.apache.karaf.tooling</groupId>
-		<artifactId>tooling</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<groupId>com.barchart.base</groupId>
+		<artifactId>barchart-archon</artifactId>
+		<version>2.3.7</version>
+		<relativePath />
 	</parent>
 
-	<!-- temp hack -->
 	<groupId>com.barchart.maven</groupId>
 	<artifactId>barchart-maven-karaf-plugin</artifactId>
-
+	<version>3.0.0-build001-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
+
 	<name>Apache Karaf :: Tooling :: Maven Karaf Plugin</name>
 
 	<properties>
 
-		<appendedResourcesDirectory>${basedir}/../../etc/appended-resources</appendedResourcesDirectory>
+		<gitUrl>scm:git:git://github.com/apache/karaf.git</gitUrl>
+		<gitFolder>${basedir}/target/checkout</gitFolder>
+		<gitModule>tooling/karaf-maven-plugin</gitModule>
+
+		<karafVersion>3.0.0-SNAPSHOT</karafVersion>
 
 	</properties>
-
-	<!-- temp hack -->
-	<distributionManagement>
-		<!-- <repository> -->
-		<!-- <id>sonatype-nexus-staging</id> -->
-		<!-- <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url> -->
-		<!-- </repository> -->
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<dependencies>
 
@@ -80,10 +61,10 @@
 			<version>3.0.3</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.2</version>
 		</dependency>
 
 		<dependency>
@@ -99,14 +80,23 @@
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>maven-bundle-plugin</artifactId>
+			<version>2.3.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>org.apache.felix.bundlerepository</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.fileinstall</artifactId>
+			<version>3.2.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.features</groupId>
 			<artifactId>org.apache.karaf.features.core</artifactId>
+			<version>${karafVersion}</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>org.apache.karaf.shell.console</artifactId>
@@ -117,50 +107,68 @@
 		<dependency>
 			<groupId>org.ops4j.pax.url</groupId>
 			<artifactId>pax-url-wrap</artifactId>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ops4j.pax.url</groupId>
 			<artifactId>pax-url-aether</artifactId>
+			<version>1.5.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.karaf.deployer</groupId>
 			<artifactId>org.apache.karaf.deployer.spring</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.deployer</groupId>
 			<artifactId>org.apache.karaf.deployer.blueprint</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.deployer</groupId>
 			<artifactId>org.apache.karaf.deployer.features</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.deployer</groupId>
 			<artifactId>org.apache.karaf.deployer.kar</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.kar</groupId>
 			<artifactId>org.apache.karaf.kar.core</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.servicemix.bundles</groupId>
 			<artifactId>org.apache.servicemix.bundles.ant</artifactId>
+			<version>1.8.4_1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
+			<version>${karafVersion}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>org.apache.karaf</groupId>
-			<artifactId>org.apache.karaf.main</artifactId>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
 			<artifactId>xbean-finder-shaded</artifactId>
+			<version>3.12</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
+			<version>3.1</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -168,71 +176,214 @@
 
 	<build>
 		<plugins>
-			<!--<plugin> -->
-			<!--<groupId>org.codehaus.mojo</groupId> -->
-			<!--<artifactId>jaxb2-maven-plugin</artifactId> -->
-			<!--<version>1.3</version> -->
-			<!--<executions> -->
-			<!--<execution> -->
-			<!--<goals> -->
-			<!--<goal>xjc</goal> -->
-			<!--</goals> -->
-			<!--</execution> -->
-			<!--</executions> -->
-			<!--<configuration> -->
-			<!--<schemaDirectory>src/main/resources/org/apache/karaf/features</schemaDirectory> -->
-			<!--<packageName>org.apache.karaf.features.wrapper</packageName> -->
-			<!--<extension>true</extension> -->
-			<!--</configuration> -->
-			<!--</plugin> -->
-
+			<!-- local codes -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<!-- local mains -->
+					<execution>
+						<id>add-main-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src-main-java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<!-- local tests -->
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src-test-java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.felix
-										</groupId>
-										<artifactId>
-											maven-bundle-plugin
-										</artifactId>
-										<versionRange>
-											[2.3.6,)
-										</versionRange>
-										<goals>
-											<goal>cleanVersions</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 
-	<reporting>
-		<!--<outputDirectory>target/site</outputDirectory> -->
-		<plugins>
-			<plugin>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<version>2.9</version>
-			</plugin>
-		</plugins>
-	</reporting>
+	<profiles>
+
+		<!-- get updated source and apply patches -->
+		<profile>
+			<id>checkout</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<configuration>
+							<connectionType>connection</connectionType>
+							<connectionUrl>${gitUrl}</connectionUrl>
+							<checkoutDirectory>${gitFolder}</checkoutDirectory>
+							<scmVersion>trunk</scmVersion>
+							<scmVersionType>branch</scmVersionType>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>checkout</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<overwrite>true</overwrite>
+									<resources>
+										<resource>
+											<directory>${gitFolder}/${gitModule}/src</directory>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+									<outputDirectory>${basedir}/src</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<configuration>
+									<target>
+										<exec executable="git">
+											<arg value="apply" />
+											<arg value="${basedir}/patches/current.patch" />
+										</exec>
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- produce diff between source and barchart -->
+		<profile>
+			<id>difference</id>
+			<build>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<configuration>
+							<connectionType>connection</connectionType>
+							<connectionUrl>${gitUrl}</connectionUrl>
+							<checkoutDirectory>${gitFolder}</checkoutDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>checkout</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<configuration>
+									<target>
+										<exec executable="git" output="${basedir}/patches/current.patch"
+											error="${basedir}/target/patches-error.txt">
+											<arg value="diff" />
+											<arg value="${gitFolder}/${gitModule}/src" />
+											<arg value="${basedir}/src" />
+										</exec>
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>verify</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-invoker-plugin</artifactId>
+						<version>1.7</version>
+						<configuration>
+							<streamLogs>true</streamLogs>
+							<projectsDirectory>${basedir}/src-main-it</projectsDirectory>
+							<cloneProjectsTo>${basedir}/target/it</cloneProjectsTo>
+							<pomIncludes>
+								<path>test-aggregate-features/pom.xml</path>
+							</pomIncludes>
+							<postBuildHookScript>verify</postBuildHookScript>
+							<goals>
+								<goal>install</goal>
+							</goals>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<goals>
+									<goal>install</goal>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<dependency>
+								<groupId>xmlunit</groupId>
+								<artifactId>xmlunit</artifactId>
+								<version>1.3</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

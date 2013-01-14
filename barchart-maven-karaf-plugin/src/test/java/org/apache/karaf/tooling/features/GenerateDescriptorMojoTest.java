@@ -17,35 +17,61 @@
  * under the License.
  */
 
-
 package org.apache.karaf.tooling.features;
+
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+
+import org.apache.karaf.features.FeaturesNamespaces;
 import org.apache.karaf.features.internal.model.Features;
+import org.apache.karaf.features.internal.model.Feature;
 import org.apache.karaf.features.internal.model.JaxbUtil;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-/**
- * @version $Rev: 1204969 $ $Date: 2011-11-22 07:11:34 -0600 (Tue, 22 Nov 2011) $
- */
 public class GenerateDescriptorMojoTest {
 
     @Test
-    public void testReadXml() throws JAXBException, SAXException, ParserConfigurationException, XMLStreamException {
-        InputStream in = getClass().getClassLoader().getResourceAsStream("input-features.xml");
+    public void testReadXml100() throws JAXBException, SAXException, ParserConfigurationException, XMLStreamException {
+
+        InputStream in = getClass().getClassLoader().getResourceAsStream("input-features-1.0.0.xml");
+
         Features featuresRoot = JaxbUtil.unmarshal(in, false);
-        assert featuresRoot.getRepository().size() == 1;
+
+        assertEquals(featuresRoot.getRepository().size(), 1);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
         JaxbUtil.marshal(featuresRoot, baos);
-        String s = new String(baos.toByteArray());
-        assert s.indexOf("repository") > -1;
-        assert s.indexOf("http://karaf.apache.org/xmlns/features/v1.0.0") > -1;
+
+        String text = new String(baos.toByteArray());
+
+        assertTrue(text.contains("repository"));
+
+        assertTrue(text.contains(FeaturesNamespaces.URI_CURRENT));
     }
+
+    @Test
+    public void testReadXml1() throws Exception {
+
+        InputStream in = getClass().getClassLoader().getResourceAsStream("input-features-1.1.0.xml");
+
+        Features featuresRoot = JaxbUtil.unmarshal(in, false);
+
+        List<Feature> featuresList = featuresRoot.getFeature();
+
+        assertEquals(featuresList.size(), 1);
+
+        Feature feature = featuresList.get(0);
+
+        assertEquals(feature.getInstall(), "auto");
+    }
+
 }
